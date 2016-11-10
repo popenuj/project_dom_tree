@@ -1,3 +1,15 @@
+class String
+
+  def del_first(regexp)
+    sub(regexp,'')
+  end
+
+  def del_first!(regexp)
+    sub!(regexp,'')
+  end
+
+end
+
 Tag = Struct.new(:type, :attributes)
 
 def parse_tag(tag)
@@ -5,23 +17,33 @@ def parse_tag(tag)
   # take tag
   # populate struct with information from the tag
 
-  type = tag.match(/[^<>]+/)
-  test = Tag.new(type, nil)
-  return test
+  tag_contents = tag.match(/[^<>]+/)[0] # "h1 id='dolphin'"  ... class='cass fef dsflkjdf'
+
+  type = tag_contents.match(/(\w+)/)[0] # "h1"
+  tag_contents.del_first!(/(\w+)/) # " id='dolphin'"
+
+  attribute = tag_contents.match(/(\w+)/)[0] # "id"
+  tag_contents.del_first!(/(\w+)/) # " ='dolphin'"
+
+  attribute_val = tag_contents.match(/(\w+)/)[0] # "dolphin"
+  p attribute_val
+  tag_contents.del_first!(/(\w+)/) # " =''"
+  p tag_contents
+
+
+
+
+  # test = Tag.new(type, nil)
+  # return test
 end
 
 
 
 test_tag = parse_tag("<h1 id='dolphin'>")
-puts test_tag.type
+# puts test_tag
 
-
-
-
-
-
-
-
+# <tagtype attribute='attr_value' >
+# <tagtype> attribute='attr_value' </tagtype>
 
 
 # "<div id = 'bim'>"
