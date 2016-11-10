@@ -1,73 +1,39 @@
-class String
-
-  def del_first(regexp)
-    sub(regexp,'')
-  end
-
-  def del_first!(regexp)
-    sub!(regexp,'')
-  end
-
-end
-
 Tag = Struct.new(:type, :attributes)
 
 class Parser
-
-  def initialize(tag)
-    @tag = tag
+  TYPE = /(\w+)/
+  ATTRIBUTE_PAIR = /\s(.*?)\s*\=\s*['|"](.*?)['|"]/
+  def parse_tag(html_snippet)
+    tag_type = parse_tag_type(html_snippet)
+    attribute_hash = get_attribute_hash(html_snippet)
+    Tag.new(tag_type, attribute_hash)
   end
 
-   def parse_tag
-
-    parse_tag_type
-    parse_attributes_and_values
-
-    # take tag
-    # populate struct with information from the tag
-
-    # tag_contents = tag.match(/[^<>]+/)[0] # "h1 id='dolphin'"  ... class='cass fef dsflkjdf'
-
-    type = tag_contents.match(/(\w+)/)[0] # "h1"
-    tag_contents.del_first!(/(\w+)/) # " id='dolphin'"
-
-    attribute = tag_contents.match(/(\w+)/)[0] # "id"
-    tag_contents.del_first!(/(\w+)/) # " ='dolphin'"
-
- # "dolphin"
-    # p attribute_val
-    tag_contents.del_first!(/(\w+)/) # " =''"
-    # p tag_contents
-
-    # test = Tag.new(type, nil)
-    # return test
+  def parse_tag_type(html_snippet)
+    html_snippet.match(TYPE)[0]
   end
 
-  def parse_tag_type
-    tag_type = @tag.match(/(\w+)/)[0]
-    p tag_type
+  def get_attribute_hash(html_snippet)
+    attributes_array = parse_attributes_and_values(html_snippet)
+    build_attribute_hash(attributes_array)
   end
 
-  def parse_attributes_and_values
-    # grab each attribute/value pair and push to a hash
-
-    # <h1 id='dolphin bluewhale shark'>
-
-    # attribute_val = @tag.match(/\=\s*['|"](.*)['|"]/)
-
-    attribute_val = @tag.scan(/\s(.*)\=\s*['|"](.*)['|"]/)
-
-    p attribute_val
+  def parse_attributes_and_values(html_snippet)
+    html_snippet.scan(ATTRIBUTE_PAIR)
   end
 
-  def parse_values
-  end 
-
+  def build_attribute_hash(attributes_array)
+    attribute_hash = Hash.new
+    attributes_array.each do |pair|
+      attribute_hash[pair[0]] = pair[1]
+    end
+    attribute_hash
+  end
 end
 
 test_tag = "<h1 id='dolphin bluewhale shark' class='animal amphibian' draggable='false'>"
-p = Parser.new(test_tag)
-p.parse_tag
+p = Parser.new
+p.parse_tag(test_tag)
 
 
 
