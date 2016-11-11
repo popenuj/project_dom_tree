@@ -12,9 +12,11 @@ class ParseTag
     parse_tag(html_snippet)
   end
 
-  # makes calls to break tags into constituent parts and forms a new Tag out of them
-  # saving the html_snippet as a whole string avoids having to reconstruct it when rendering
-  # "<div id="dolphin" class="animal mammal"> will get saved in that exact form as well as its constituent parts being saved in an attribute hash
+  # Makes calls to break tags into constituent parts and
+  # forms a new Tag out of them.
+  # Saving the html_snippet as a whole string avoids
+  # having to reconstruct it when rendering.
+  # "<div id="dolphin" class="animal mammal">" will get saved in that exact form as well as its constituent parts being saved in an attribute hash
   def parse_tag(html_snippet)
     tag_type = parse_tag_type(html_snippet)
     attribute_hash = get_attribute_hash(html_snippet)

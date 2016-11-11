@@ -3,7 +3,7 @@ require_relative 'tag_parser'
 require_relative 'tag'
 
 class TreeBuilder
-  TEXT_TAG_CAPTURE = /(?<=>)(.+?)(?=<)|(<.+?>)/
+  TAG_TEXT_CAPTURE = /(<.+?>)|(?<=>)(.+?)(?=<)/
 
   attr_accessor :file,
                 :parent_node,
@@ -20,7 +20,7 @@ class TreeBuilder
 
   def parse_line
     # create two match groups
-    @file.scan(TEXT_TAG_CAPTURE) do |text, tag|
+    @file.scan(TAG_TEXT_CAPTURE) do |tag, text|
       # if match group 2 (tag)
       if tag
         # if it is an opening tag create a child
@@ -37,7 +37,8 @@ class TreeBuilder
     end
   end
 
-  # calls close_tag? to verify, will return opposite of close tag, so if it is open it will return true
+  # Calls close_tag? to verify, will return opposite of
+  # close tag, so if it is open it will return true.
   def open_tag?(tag)
     !close_tag?(tag)
   end
@@ -82,5 +83,5 @@ class TreeBuilder
     @current_node = @current_node.parent
   end
 end
-t = TreeBuilder.new('simple_test.html')
+t = TreeBuilder.new('test.html')
 p t.root
