@@ -11,12 +11,11 @@ class Render
   # spaces, but rendering was off and I moved on instead
   # of spending too much time on it.
   def render_tree(current_node)
+    # print "#{" " * current_node.depth}" +
     print current_node.text + "\n"
     current_node.children.each do |child|
       render_tree(child)
     end
   end
-
-
 
 end

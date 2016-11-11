@@ -104,6 +104,6 @@ class TreeBuilder
   end
 
 end
-t = TreeBuilder.new('test.html')
+t = TreeBuilder.new('simple_test.html')
 p t.root
 p t.render
