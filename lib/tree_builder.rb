@@ -52,17 +52,27 @@ class TreeBuilder
     tag.include?("</") ? true : false
   end
 
+  # determines whether or not root needs to be set and delegates tag creation accordingly
+  def add_tag(tag)
+    if @current_node == nil
+      add_root(tag)
+    else
+      add_child(tag)
+    end
+  end
+
+  # adds the root node
+  def add_root(tag)
+    @root = ParseTag.new(tag).tag
+    @current_node = @root
+  end
+
   # creates a child node, sets it to the current node, and sets parent and child
   def add_child(tag)
-    if @current_node == nil
-      @root = ParseTag.new(tag).tag
-      @current_node = @root
-    else
-      @parent_node = @current_node
-      @current_node = ParseTag.new(tag).tag
-      @current_node.parent = @parent_node
-      @parent_node.children.push @current_node
-    end
+    @parent_node = @current_node
+    @current_node = ParseTag.new(tag).tag
+    @current_node.parent = @parent_node
+    @parent_node.children.push @current_node
   end
 
   # adds text as a child of current node by creating a new tag with type "text"

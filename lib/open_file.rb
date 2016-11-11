@@ -25,6 +25,7 @@ class OpenFile
     @file = @file.split("\n")
   end
 
+  # takes each line in array and strips it of its leading white spaces from tabs
   def strip_lines
     @file.each { |line| line.strip!}
   end

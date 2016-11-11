@@ -10,8 +10,6 @@ use Regex for two capture groups separating tags and text
 
 
 class ParseHTML
-set variable to File.read
-split at new lines
 initialize new tree
 send lines to another method (file.each { |line| deconstruct_line(line) })
   - if opening tag then parent_node = current_node, current_node = ParseTag(tag)
@@ -37,11 +35,6 @@ text = "<div>
   </div>
   div text after
 </div>"
-
-text = text.gsub("\n", "")
-text = text.scan(/(<.+?>)|(?<=>)(.+?)(?=<)/) do |tag, t_field|
-  if tag_start?(tag)
-
 
 
 <div>
