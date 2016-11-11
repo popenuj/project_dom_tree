@@ -1,8 +1,41 @@
-Tag = Struct.new(:type, :attributes)
+Tag = Struct.new(:type, :attributes, :parent, :children)
+
+class Node
+
+  def initialize(tag, parent = nil, children = [])
+    @tag = tag
+    @parent = parent
+    @children = children
+  end
+
+  def add_child(tag)
+    # take a tag, create a node, and push into children array
+  end
+
+end
+
+class HTMLTree
+
+  def initialize(file)
+    @file = file  # array of each line in a given html file
+    @root = file.shift  #shift off <html> and and set as tree root
+  end
+
+  def build_html_tree
+    #  
+
+  end
+
+end
 
 class Parser
+
   TYPE = /(\w+)/
   ATTRIBUTE_PAIR = /\s(.*?)\s*\=\s*['|"](.*?)['|"]/
+
+  # parse_tag can check if the snippet is wrapped in carets or not
+  # and handle each situation correctly
+
   def parse_tag(html_snippet)
     tag_type = parse_tag_type(html_snippet)
     attribute_hash = get_attribute_hash(html_snippet)
@@ -33,7 +66,7 @@ end
 
 test_tag = "<h1 id='dolphin bluewhale shark' class='animal amphibian' draggable='false'>"
 p = Parser.new
-p.parse_tag(test_tag)
+p p.parse_tag(test_tag)
 
 
 
