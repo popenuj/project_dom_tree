@@ -1,6 +1,7 @@
 require_relative 'open_file'
 require_relative 'tag_parser'
 require_relative 'tag'
+require_relative 'render'
 
 class TreeBuilder
   TAG_TEXT_CAPTURE = /(<.+?>)|(?<=>)(.+?)(?=<)/
@@ -27,6 +28,7 @@ class TreeBuilder
         if open_tag?(tag)
           add_tag(tag)
         elsif close_tag?(tag)
+          add_tag(tag)
           return_to_parent
         end
       elsif text
@@ -84,6 +86,13 @@ class TreeBuilder
   def return_to_parent
     @current_node = @current_node.parent
   end
+
+  # Calls render instance passing it @root.
+  def render
+    Render.new(@root)
+  end
+
 end
 t = TreeBuilder.new('test.html')
 p t.root
+p t.render

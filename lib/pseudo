@@ -1,2 +1,0 @@
-Rendering output from built tree
-- all original lines (minus white space from tabs) are saved in their original format as a text attribute so the actual open tags will not have to be rebuilt

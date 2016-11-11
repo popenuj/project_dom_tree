@@ -15,5 +15,4 @@ class Tag
     @parent = parent
     @children = children
   end
-
 end
