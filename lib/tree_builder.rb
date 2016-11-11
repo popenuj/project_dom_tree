@@ -63,6 +63,7 @@ class TreeBuilder
   def add_root(tag)
     @root = ParseTag.new(tag).tag
     @current_node = @root
+    @root.depth = -1
   end
 
   # Creates a child node, sets it to the current node,
@@ -72,6 +73,7 @@ class TreeBuilder
     @current_node = ParseTag.new(tag).tag
     @current_node.parent = @parent_node
     @parent_node.children.push @current_node
+    @current_node.depth = @parent_node.depth += 1
   end
 
   # Adds text as a child of current node by creating a
@@ -80,11 +82,13 @@ class TreeBuilder
     text_tag = Tag.new("text", text)
     @current_node.children.push text_tag
     text_tag.parent = @current_node
+    text_tag.depth = @parent_node.depth
   end
 
   # Sets current node to current node's parent.
   def return_to_parent
     @current_node = @current_node.parent
+    @current_node.depth -= 1
   end
 
   # Calls render instance passing it @root.

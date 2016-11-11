@@ -7,7 +7,7 @@ class Render
   # Iterates through the tree recursively and prints each
   # line.
   def render_tree(current_node)
-    print current_node.text + "\n"
+    print "#{ " " * current_node.depth }" + current_node.text + "\n"
     current_node.children.each do |child|
       render_tree(child)
     end
