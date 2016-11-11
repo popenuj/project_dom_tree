@@ -3,11 +3,11 @@ class OpenFile
 
   def initialize(file)
     @file = file
-    file_to_lines
+    file_to_line
   end
 
   # manipulates file to a point where it can be iterated over and parsed
-  def file_to_lines
+  def file_to_line
     open_file
     break_lines
     strip_lines

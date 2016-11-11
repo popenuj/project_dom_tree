@@ -3,8 +3,7 @@ require_relative 'tag_parser'
 require_relative 'tag'
 
 class TreeBuilder
-  TEXT_TAG_CAPTURE = /(<.+?>)|(?<=>)(.+?)(?=<)/
-  DOCTYPE = ("<!doctype html>")
+  TEXT_TAG_CAPTURE = /(?<=>)(.+?)(?=<)|(<.+?>)/
 
   attr_accessor :file,
                 :parent_node,
@@ -22,20 +21,16 @@ class TreeBuilder
   def parse_line
     # create two match groups
     @file.scan(TEXT_TAG_CAPTURE) do |text, tag|
-      # if match group 1 (tag)
+      # if match group 2 (tag)
       if tag
-        # sets first line (the doctype to the root)
-        # if tag == DOCTYPE
-        #   @root = tag
-        #   @current_node = @root
         # if it is an opening tag create a child
         if open_tag?(tag)
-          add_child(tag)
+          add_tag(tag)
         # if it is a closing tag return to parent node
         elsif close_tag?(tag)
           return_to_parent
         end
-      # else it will be text from capture group (text)
+      # match group 1 (text)
       elsif text
         add_text_child(text)
       end
