@@ -6,7 +6,7 @@ class ParseTag
   TYPE = /(\w+)/
   ATTRIBUTE_PAIR = /\s(.*?)\s*\=\s*['|"](.*?)['|"]/
 
-  # Takes tag from html line and initializes tag struct 
+  # Takes tag from html line and initializes tag struct
   # creation.
   def initialize(html_snippet)
     @tag = nil
