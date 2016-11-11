@@ -45,12 +45,6 @@
 
 ["<div>", "div text before", "<p>", "p text", "</p>", "<div>", "more div text", "</div>", "div text after", "</div>"]
 
-# for each item in the area
-# create a node using struct
-# if no root node, set node as root node
-# add children to that node until we hit closing tag
-# repeat for other children that have an opening tag
-
 <div>
   div text before
   <p>
@@ -64,4 +58,3 @@
 
 
 "<div>\n\tdiv text before\n\t<p>\n\tp text</p><div>\n\tmore div text</div>div text after</div>"
-
