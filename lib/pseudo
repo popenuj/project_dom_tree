@@ -1,0 +1,10 @@
+This function outputs simple statistics for a particular node, including:
+
+  - How many total nodes there are in the sub-tree below
+   this node.
+  - A count of each node type in the sub-tree below this
+    node
+  - All of the node's data attributes
+
+
+to count nodes below this one make a recursive function that has a count of children and counts children per node

@@ -13,7 +13,6 @@ class OpenFile
     break_lines
     strip_lines
     join_lines
-    p @file
     @file
   end
 
